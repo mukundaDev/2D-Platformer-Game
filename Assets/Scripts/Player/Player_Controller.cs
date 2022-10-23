@@ -6,7 +6,6 @@ public class Player_Controller : MonoBehaviour
 
     private Rigidbody2D rb2d;
     private Animator _animator;
-    public GameObject player;
     public ScoreController _scoreController;
     public GameOverController gameOverController;
     
@@ -20,7 +19,9 @@ public class Player_Controller : MonoBehaviour
     public Transform GroundCheck;
     public LayerMask groundLayer;
     private bool doubleJump;
-    
+
+  
+
     private void Awake()
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
@@ -34,10 +35,9 @@ public class Player_Controller : MonoBehaviour
         MoveCharecter(horizontal);
         Crouch();
         HorizontalAnimation(horizontal);
-
         JumpAnimation();
     }
-
+   
     private void JumpAnimation()
     {
         if (IsGrounded() && !Input.GetButton("Jump"))
@@ -48,10 +48,15 @@ public class Player_Controller : MonoBehaviour
         {
             if (IsGrounded() || doubleJump)
             {
-                // _animator.SetTrigger("Jump");
+                //_animator.SetBool("Grounded", true);
+                _animator.SetBool("Jump",true);
                 rb2d.velocity = new Vector2(rb2d.velocity.x, _jumpSpeed);
                 doubleJump = !doubleJump;
             }
+        }
+        else if(IsGrounded() == false && Input.GetButtonUp("Jump"))
+        {
+            _animator.SetBool("Jump", false);
         }
         if (Input.GetButtonUp("Jump") && rb2d.velocity.y > 0f)
         {
@@ -60,9 +65,10 @@ public class Player_Controller : MonoBehaviour
     }
 
     public bool IsGrounded()
-    {
+        {
+
         return Physics2D.OverlapCircle(GroundCheck.position, 0.2f, groundLayer);
-    }
+        }
     void MoveCharecter(float horizontal)
     {
         Vector3 position = transform.position;
@@ -91,18 +97,13 @@ public class Player_Controller : MonoBehaviour
     {
         if(other.gameObject.CompareTag("MovingPlatform"))
         {
-            player.transform.parent = other.gameObject.transform;
+           // player.transform.parent = other.gameObject.transform;
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.tag == "Enemy")
-        {
-           
-        }
-    }
+ 
     public void KillPlayer()
     {
+        _animator.SetTrigger("isDead");
         gameOverController.PlayerDied();
         this.enabled = false;
     }

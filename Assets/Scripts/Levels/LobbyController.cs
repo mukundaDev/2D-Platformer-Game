@@ -11,15 +11,16 @@ public class LobbyController : MonoBehaviour
 
     public Button buttonStart;
     public Button buttonQuit;
-
-
+    public GameObject levelSelection;
     public void ButtonStart()
     {
-        SceneManager.LoadScene("Level01");
+        levelSelection.SetActive(true);
+     
     }
 
     public void ButtonQuit()
     {
+        
         SceneManager.LoadScene(0);
     }
 }

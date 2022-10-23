@@ -6,11 +6,10 @@ public class GameOverController : MonoBehaviour
 {
     public Button buttonRestart;
     public Button buttonMainmenu;
-    public Animator animator;
+ 
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
         buttonRestart.onClick.AddListener(RestartButton);
         buttonMainmenu.onClick.AddListener(MainMenuButton);
     }
@@ -20,7 +19,8 @@ public class GameOverController : MonoBehaviour
     }
     public void RestartButton()
     {
-        SceneManager.LoadScene("Level01");
+      Scene scene = SceneManager.GetActiveScene();
+      SceneManager.LoadScene(scene.buildIndex);
     }
     public void MainMenuButton()
     {

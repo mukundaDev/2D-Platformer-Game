@@ -20,6 +20,7 @@ public class HealthSystem : MonoBehaviour
         if(playerHealth <= 0)
         {
             anim.SetTrigger("isDead");
+            
             gameOverController.PlayerDied();
         }
         else

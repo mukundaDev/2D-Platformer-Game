@@ -1,23 +1,21 @@
 ﻿using UnityEngine;
 
-
-
 public class EnemyController : MonoBehaviour
 {
 
    //Patrolling
- 
     [SerializeField]
     private float walkSpeed;
     public Transform groundDetect;
     public float rayDist;
     private bool movingRight;
+    
 
     [SerializeField]
     Animator _animator;
     [SerializeField]
     private HealthSystem _healthSystem;
-
+   
     //Heartsystem
     public  int _enemyDamage;
     [SerializeField]
@@ -46,20 +44,13 @@ public class EnemyController : MonoBehaviour
 
      void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag =="Player")
-        {
-           _animator.SetTrigger("Attack");
+       if (collision.gameObject.tag =="Player")
+       {
+           _animator.SetBool("Attack",true);
             Damage();
-        }
+       }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            _animator.SetTrigger("EnemyDied");
-            Destroy(this.gameObject);
-        }
-    }
+  
     private void Damage()
     {
         _healthSystem.playerHealth -= _enemyDamage;
