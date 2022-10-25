@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Levels;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -16,6 +17,19 @@ public class LevelSelection : MonoBehaviour
 
     public void onClick()
     {
-        SceneManager.LoadScene(LevelName);
+        LevelStatus levelStatus = LevelManager.Instance.GetLevelStatus(LevelName);
+        switch (levelStatus)
+        {
+            case LevelStatus.Locked:
+                break;
+            case LevelStatus.UnLocked:
+                SoundManager.Instance.Play(Sounds.buttonClick);
+                SceneManager.LoadScene(LevelName);
+                break;
+            case LevelStatus.Completed:
+                SoundManager.Instance.Play(Sounds.buttonClick);
+                SceneManager.LoadScene(LevelName);
+                break;
+        }
     }
 }

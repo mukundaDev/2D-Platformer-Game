@@ -18,8 +18,6 @@ public class EnemyController : MonoBehaviour
    
     //Heartsystem
     public  int _enemyDamage;
-    [SerializeField]
-
 
 
     void Update()

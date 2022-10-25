@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Levels;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -13,13 +14,7 @@ public class LevelOverController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<Player_Controller>() != null)
         {
-            Debug.Log("YUP");
-            SceneManager.LoadScene(nextScenLoad);
-
-            if (nextScenLoad > PlayerPrefs.GetInt("levelAt"))
-            {
-                PlayerPrefs.SetInt("levelAt", nextScenLoad);
-            }
+            LevelManager.Instance.SetLevelStatus(SceneManager.GetActiveScene().name, LevelStatus.Completed);
         }
     }
 }
