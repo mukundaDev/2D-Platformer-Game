@@ -48,8 +48,8 @@ public class Player_Controller : MonoBehaviour
         {
             if (IsGrounded() || doubleJump)
             {
-                //_animator.SetBool("Grounded", true);
                 _animator.SetBool("Jump",true);
+              //  SoundManager.Instance.Play(Sounds.PlayerJump);
                 rb2d.velocity = new Vector2(rb2d.velocity.x, _jumpSpeed);
                 doubleJump = !doubleJump;
             }
@@ -60,6 +60,7 @@ public class Player_Controller : MonoBehaviour
         }
         if (Input.GetButtonUp("Jump") && rb2d.velocity.y > 0f)
         {
+
             rb2d.velocity = new Vector2(rb2d.velocity.x, rb2d.velocity.y * 0.5f);
         }
     }
@@ -74,6 +75,7 @@ public class Player_Controller : MonoBehaviour
         Vector3 position = transform.position;
         position.x += horizontal * _playerSpeed * Time.deltaTime;
         transform.position = position;
+       //SoundManager.Instance.Play(Sounds.PlayerMove);
     }
 
     public void HorizontalAnimation(float horizontal)
@@ -87,7 +89,8 @@ public class Player_Controller : MonoBehaviour
             }
             else if (horizontal > 0)
             {
-                scale.x = Mathf.Abs(scale.x);
+            //SoundManager.Instance.Play(Sounds.PlayerMove);
+            scale.x = Mathf.Abs(scale.x);
             }
             transform.localScale = scale;
         }

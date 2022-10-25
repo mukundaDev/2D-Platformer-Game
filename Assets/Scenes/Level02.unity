@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5225,7 +5225,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonRestart: {fileID: 914977014}
   buttonMainmenu: {fileID: 1316499054}
-  animator: {fileID: 1041974170}
 --- !u!95 &1427272230
 Animator:
   serializedVersion: 3
@@ -5414,7 +5413,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1563504155}
   - component: {fileID: 1563504154}
-  - component: {fileID: 1563504153}
   - component: {fileID: 1563504156}
   - component: {fileID: 1563504157}
   m_Layer: 0
@@ -5424,14 +5422,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1563504153
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563504152}
-  m_Enabled: 1
 --- !u!20 &1563504154
 Camera:
   m_ObjectHideFlags: 0
