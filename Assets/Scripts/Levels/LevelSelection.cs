@@ -21,6 +21,7 @@ public class LevelSelection : MonoBehaviour
         switch (levelStatus)
         {
             case LevelStatus.Locked:
+                SceneManager.LoadScene(LevelName);
                 break;
             case LevelStatus.UnLocked:
                 SoundManager.Instance.Play(Sounds.buttonClick);

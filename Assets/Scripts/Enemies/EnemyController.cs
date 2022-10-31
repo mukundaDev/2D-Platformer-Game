@@ -29,6 +29,7 @@ public class EnemyController : MonoBehaviour
         {
             if (movingRight)
             {
+                Debug.Log("Endof the Ground");
                 transform.eulerAngles = new Vector3(0, -180, 0);
                 movingRight = false;
             }
@@ -39,7 +40,6 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
-
      void OnCollisionEnter2D(Collision2D collision)
     {
        if (collision.gameObject.tag =="Player")
