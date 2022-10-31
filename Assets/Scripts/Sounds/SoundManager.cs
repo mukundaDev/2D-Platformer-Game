@@ -71,5 +71,6 @@ public enum Sounds
     PlayerDeath, 
     PlayerPicUp,
     EnemyDeath,
+    MovingPlatform,
 
 }

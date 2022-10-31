@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 
 public class Player_Controller : MonoBehaviour
@@ -8,8 +9,8 @@ public class Player_Controller : MonoBehaviour
     private Animator _animator;
     public ScoreController _scoreController;
     public GameOverController gameOverController;
-    
-    
+
+
     [SerializeField]
     private float _playerSpeed = 5.5f;
 
@@ -20,14 +21,15 @@ public class Player_Controller : MonoBehaviour
     public LayerMask groundLayer;
     private bool doubleJump;
 
-  
+
+
 
     private void Awake()
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
-       _animator = gameObject.GetComponent<Animator>();
+        _animator = gameObject.GetComponent<Animator>();
     }
-  
+
     public void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -37,7 +39,7 @@ public class Player_Controller : MonoBehaviour
         HorizontalAnimation(horizontal);
         JumpAnimation();
     }
-   
+
     private void JumpAnimation()
     {
         if (IsGrounded() && !Input.GetButton("Jump"))
@@ -46,84 +48,73 @@ public class Player_Controller : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump"))
         {
+            SoundManager.Instance.Play(Sounds.PlayerJump);
             if (IsGrounded() || doubleJump)
             {
-                _animator.SetBool("Jump",true);
-              //  SoundManager.Instance.Play(Sounds.PlayerJump);
+                _animator.SetBool("Jump", true);
                 rb2d.velocity = new Vector2(rb2d.velocity.x, _jumpSpeed);
                 doubleJump = !doubleJump;
             }
         }
-        else if(IsGrounded() == false && Input.GetButtonUp("Jump"))
+        else if (IsGrounded() == false && Input.GetButtonUp("Jump"))
         {
-            _animator.SetBool("Jump", false);
+           _animator.SetBool("Jump", false);
         }
         if (Input.GetButtonUp("Jump") && rb2d.velocity.y > 0f)
         {
-
             rb2d.velocity = new Vector2(rb2d.velocity.x, rb2d.velocity.y * 0.5f);
         }
     }
-
     public bool IsGrounded()
-        {
-
+    {
         return Physics2D.OverlapCircle(GroundCheck.position, 0.2f, groundLayer);
-        }
+    }
     void MoveCharecter(float horizontal)
     {
         Vector3 position = transform.position;
         position.x += horizontal * _playerSpeed * Time.deltaTime;
         transform.position = position;
-       //SoundManager.Instance.Play(Sounds.PlayerMove);
     }
 
     public void HorizontalAnimation(float horizontal)
-        {
-            _animator.SetFloat("speed", Mathf.Abs(horizontal));
-        
-            Vector2 scale = transform.localScale;
-            if (horizontal < 0)
-            {
-                scale.x = -1f * Mathf.Abs(scale.x);
-            }
-            else if (horizontal > 0)
-            {
-            //SoundManager.Instance.Play(Sounds.PlayerMove);
-            scale.x = Mathf.Abs(scale.x);
-            }
-            transform.localScale = scale;
-        }
-
-
-    private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("MovingPlatform"))
+        _animator.SetFloat("speed", Mathf.Abs(horizontal));
+
+        Vector2 scale = transform.localScale;
+        if (horizontal < 0)
         {
-           // player.transform.parent = other.gameObject.transform;
+            scale.x = -1f * Mathf.Abs(scale.x);
         }
+        else if (horizontal > 0)
+        {
+            scale.x = Mathf.Abs(scale.x);
+        }
+        transform.localScale = scale;
     }
- 
+
     public void KillPlayer()
     {
         _animator.SetTrigger("isDead");
         gameOverController.PlayerDied();
         this.enabled = false;
     }
-    void Crouch()
-    {
-        if (Input.GetKey(KeyCode.LeftControl))
+        void Crouch()
         {
-            _animator.SetBool("crouch", true);
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                _animator.SetBool("crouch", true);
+            }
+            else
+            {
+                _animator.SetBool("crouch", false);
+            }
         }
-        else
+        public void PickUpKeys()
         {
-            _animator.SetBool("crouch", false);
+            SoundManager.Instance.Play(Sounds.PlayerPicUp);
+            _scoreController.AddScore(10);
         }
-    }
-    public void PickUpKeys()
-    {
-        _scoreController.AddScore(10);
-    }
-  
+   
+
 }
+

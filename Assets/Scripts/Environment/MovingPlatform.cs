@@ -34,6 +34,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if(collision.gameObject.name == "Player")
         {
+            SoundManager.Instance.Play(Sounds.MovingPlatform);
             collision.gameObject.transform.SetParent(transform);
         }
     }
